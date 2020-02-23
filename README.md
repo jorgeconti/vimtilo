@@ -20,9 +20,7 @@ Obs: o *Current Folder* do *MatLab* deve estar direcionado para o destino do arq
 
 links para download dos software de aquisição de dados do sensor MLSL276
 
-[Software de aquisição de dados original do fabricante MLSL276](https://www.wenglor.com/index.php?L=0&id=1148&tx_wsshoploader_pi1[url]=catalog/productDetail.jsf;jsessionid::2fRby-Npc6Ls2NlJg7M-umOeFBqNYwEu6CoA_SAPOSQonLixnzH0JzeTUavcw46w;saplb_*::(J2EE2811920)2811950;;wec-appid::Shop_1000_EXT_EN;;itemKey::MLSL276;;wec-locale::en_US;;ifr::y)
-
-[Link direto, software de aquisição de dados original do fabricante MLSL276](https://www.wenglor.com/fileadmin/functions/wdm.php?dfile=SDK_Windows_Linux_weCat3D_1.2.0.zip&pfad=fileadmin/download/SOFTWARE/&sfile=SDK_Windows_Linux_weCat3D_1.2.0.zip&zip=false)
+[Software de aquisição de dados original do fabricante MLSL276](https://www.wenglor.com/index.php?L=0&id=1148&tx_wsshoploader_pi1[url]=catalog/productDetail.jsf;jsessionid::2fRby-Npc6Ls2NlJg7M-umOeFBqNYwEu6CoA_SAPOSQonLixnzH0JzeTUavcw46w;saplb_*::(J2EE2811920)2811950;;wec-appid::Shop_1000_EXT_EN;;itemKey::MLSL276;;wec-locale::en_US;;ifr::y), navegue para a aba de downloads e selecione SDK_Windows_Linux_weCat3D_1.2.0.zip
 
 
 [Software de aquisição de dados modificado para o projeto VIMTILO](https://www.dropbox.com/s/vs0yw5p3ww2lnqf/weCat3D_SDK_Windows_QT_C%2B%2B_V_2_1_3.rar?dl=0)
