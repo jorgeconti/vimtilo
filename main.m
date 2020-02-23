@@ -11,7 +11,7 @@ salvarpontoM = false;
 
 %% plot de graficos
 plotsDesnecessarios = false;
-plotreduzido = false;
+plotreduzido = false; %% realiza o plot com apenas um bloco da ponte
 
 %% nome do arquivo de imagens
 destinoImagens="imagens\";
@@ -22,6 +22,17 @@ end
 if(~exist( 'imagens', 'dir') && salvarPNG || salvarFIG || salvarEPS)
     mkdir imagens
     disp("Arquivo para repositório de imagens criado")
+end
+
+%% nome do arquivo de dormentes
+destinoDormentes="dormentes\";
+if(exist( 'dormentes', 'dir'))
+    rmdir('dormentes','s');    
+    disp("Antigo repositório de dormentes excluido")
+end
+if(~exist( 'dormentes', 'dir'))
+    mkdir dormentes
+    disp("Arquivo para repositório de dormentes criado")
 end
 
 %% Carregar dados da ponte
@@ -1041,8 +1052,8 @@ centroide(:,y)=convert_to_real(centroide(:,y),y);
 espessura_da_linha=1.3;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if(plotreduzido)
-    margem_Inferior_Y = -2.2820e+04
-    margem_Superior_Y = -2.6700e+04
+    margem_Inferior_Y = -2.2820e+04;
+    margem_Superior_Y = -2.6700e+04;
 else
     margem_Inferior_Y=max(max(EY*Y_dot_trilho));
     margem_Superior_Y=min(min(EY*Y_dot_trilho));
@@ -1302,10 +1313,9 @@ for i=1:size(dormente_pontos,3)
     pontos=[pontos;[dormente_pontos(x,han,i,j);EY*dormente_pontos(y,han,i,j)]'];
 end
 
-delete dormente_dimensões.xls
 pontos(:,x)=pontos(:,1)*10;%*1.004982; %% ajuste de dimensão
 pontos(:,y)=pontos(:,2)*10;%*0.983792;
-xlswrite('dormente_dimensões', pontos(2:end,:));
+xlswrite(destinoDormentes+'dimensões', pontos(2:end,:));
 
 pontos=[0,0];
 j=2;
@@ -1314,10 +1324,9 @@ for i=1:size(dormente_pontos,3)
     pontos=[pontos;[dormente_pontos(x,han,i,j);EY*dormente_pontos(y,han,i,j)]'];
 end
 
-delete dormente_entalhe_vertical.xls
 pontos(:,x)=pontos(:,1)*10; %% ajuste de dimensão
 pontos(:,y)=pontos(:,2)*10;
-xlswrite('dormente_entalhe_vertical', pontos(2:end,:));
+xlswrite(destinoDormentes+'entalhe_vertical', pontos(2:end,:));
 
 pontos=[0,0];
 for j=1:3:4
@@ -1327,9 +1336,8 @@ for j=1:3:4
     end
 end
 
-delete dormente_entalhe_diagonal_e_contraventamentos.xls
 pontos(:,x)=pontos(:,1)*10;%*1.004982; %% ajuste de dimensão
 pontos(:,y)=pontos(:,2)*10;%*0.983792;
-xlswrite('dormente_entalhe_diagonal_e_contraventamentos', pontos(2:end,:));
+xlswrite(destinoDormentes+'entalhe_contraventamentos', pontos(2:end,:));
 
 %xlswrite('NomeDoArquivoXLS', todos_pontos_dormentes);
