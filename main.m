@@ -4,7 +4,7 @@
 clc; clearvars; close all;
 
 %% salvar arquivos
-salvarPNG = false;
+salvarPNG = true;
 salvarFIG = false;
 salvarEPS = false;
 salvarpontoM = false;
@@ -13,12 +13,28 @@ salvarpontoM = false;
 plotsDesnecessarios = false;
 plotreduzido = false;
 
-%% nome do arquivo
-nome='ponte_inda_posicao_normal_1mm_laser_alto.mat';
-destinoImagens="D:\data\imagens\";
+%% nome do arquivo de imagens
+destinoImagens="imagens\";
+if(exist( 'imagens', 'dir') && salvarPNG || salvarFIG || salvarEPS)
+    rmdir('imagens','s');    
+    disp("Antigo repositório de imagens excluido")
+end
+if(~exist( 'imagens', 'dir') && salvarPNG || salvarFIG || salvarEPS)
+    mkdir imagens
+    disp("Arquivo para repositório de imagens criado")
+end
 
 %% Carregar dados da ponte
-load(nome)
+load('data/laser1Amostragem');
+load('data/laser1Intensidade');
+load('data/laser1Encoder');
+load('data/laser1X');
+load('data/laser1Z');
+load('data/laser2Amostragem');
+load('data/laser2Intensidade');
+load('data/laser2Encoder');
+load('data/laser2X');
+load('data/laser2Z');
 
 %% especificações do novo dormente
 dormenteComprimento=2700;
@@ -79,12 +95,12 @@ reducao=10;
 resolucao
 
 %% Gerar mapa de caracteristicas da nuvem de pontos
-Y=aux1E*(pi*200)/20000;
+Y=laser1Encoder*(pi*200)/20000;
 
-X11=aux1X(:,:)+xoff;
+X11=laser1X(:,:)+xoff;
 Y11=Y(:,:)+10;
-Z11=aux1Z(:,:)-7;
-I11=aux1I(:,:);
+Z11=laser1Z(:,:)-7;
+I11=laser1Intensidade(:,:);
 
 Z11=Z11.*(X11~=xoff);
 Y11=Y11.*(X11~=xoff);
@@ -123,9 +139,9 @@ dotcloudcutLongarina1       =Xmap&Zmapl&Imap;
 dotcloudcutVia1             =Xmap&Zmapv&Imap;
 dotcloudcutTrilho1=Xmap&ZmapTrilho&ImapTrilho;
 
-I22=aux2I(:,:);
-Z22=aux2Z(:,:);
-X22=aux2X(:,:);
+I22=laser2Intensidade(:,:);
+Z22=laser2Z(:,:);
+X22=laser2X(:,:);
 Y22=Y(:,:);
 Z22=Z22.*(X22~=0);
 Y22=Y22.*(X22~=0);
@@ -162,7 +178,8 @@ dotcloudcutLongarina2       =Xmap&Zmapl&Imap;
 dotcloudcutVia2             =Xmap&Zmapv&Imap;
 dotcloudcutTrilho2=Xmap&ZmapTrilho&ImapTrilho;
 
-clearvars aux1E aux1I aux1T aux1X aux1Z aux2E aux2I aux2T aux2X aux2Z;
+clearvars laser1Encoder laser1Intensidade laser1Amostragem laser1X laser1Z;
+clearvars laser2Encoder laser2Intensidade laser2Amostragem laser2X laser2Z;
 clearvars Ymap Yi Ys Xmap Xi Xs Zmapc Zic Zsc Zmapl Zil Zsl Zmapv Ziv Zsv;
 clearvars ZmapTrilho Zt Zsc Imap Ii Is ImapTrilho It Is resolusao
 
@@ -264,20 +281,20 @@ if(plotsDesnecessarios)
     zlabel('Y  [mm]');
     xlabel('X  [mm]');
     ylabel('Z  [mm]');
+    
+    
+    %%% salvar figura
+    nomeFigura="Nuvem de pontos";
+    if(salvarPNG)
+        saveas(gcf,destinoImagens+nomeFigura+'.png')
+    end
+    if(salvarFIG)
+        saveas(gcf,destinoImagens+nomeFigura+'.fig')
+    end
+    if(salvarEPS)
+        saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    end
 end
-
-%%% salvar figura
-nomeFigura="Nuvem de pontos";
-if(salvarPNG)
-    saveas(gcf,destinoImagens+nomeFigura+'.png')
-end
-if(salvarFIG)
-    saveas(gcf,destinoImagens+nomeFigura+'.fig')
-end
-if(salvarEPS)
-    saveas(gcf,destinoImagens+nomeFigura,'epsc')
-end
-
 %% plotarScatterInicialpos longarinas
 % realiza o plot tridimensional da longarina
 
@@ -288,19 +305,19 @@ if(plotsDesnecessarios)
     zlabel('Z  [mm]');
     xlabel('X  [mm]');
     ylabel('Y  [mm]');
+    
+    %%% salvar figura
+    nomeFigura="Nuvem de pontos longarina filtrada";
+    if(salvarPNG)
+        saveas(gcf,destinoImagens+nomeFigura+'.png')
+    end
+    if(salvarFIG)
+        saveas(gcf,destinoImagens+nomeFigura+'.fig')
+    end
+    if(salvarEPS)
+        saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    end
 end
-%%% salvar figura
-nomeFigura="Nuvem de pontos longarina filtrada";
-if(salvarPNG)
-    saveas(gcf,destinoImagens+nomeFigura+'.png')
-end
-if(salvarFIG)
-    saveas(gcf,destinoImagens+nomeFigura+'.fig')
-end
-if(salvarEPS)
-    saveas(gcf,destinoImagens+nomeFigura,'epsc')
-end
-
 %% plotarScatterInicialpos filtragem
 % realiza o plot tridimensional inicial da nuvem de pontos com
 % predefinições implementadas em (inicializacao)
@@ -319,17 +336,18 @@ if(plotsDesnecessarios)
     zlabel('Y  [mm]');
     xlabel('X  [mm]');
     ylabel('Z  [mm]');
-end
-%%% salvar figura
-nomeFigura="Nuvem de pontos filtrada";
-if(salvarPNG)
-    saveas(gcf,destinoImagens+nomeFigura+'.png')
-end
-if(salvarFIG)
-    saveas(gcf,destinoImagens+nomeFigura+'.fig')
-end
-if(salvarEPS)
-    saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    
+    %%% salvar figura
+    nomeFigura="Nuvem de pontos filtrada";
+    if(salvarPNG)
+        saveas(gcf,destinoImagens+nomeFigura+'.png')
+    end
+    if(salvarFIG)
+        saveas(gcf,destinoImagens+nomeFigura+'.fig')
+    end
+    if(salvarEPS)
+        saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    end
 end
 %% inicializarHblod
 % Trabalhando com os blobs gerados
@@ -426,17 +444,18 @@ xlateralDirSup=xlateralDir+thresholdColuna;
 if(plotsDesnecessarios)
     figure('Name','Imagem binaria','NumberTitle','off');
     imshow(dotcloudcut)
-end
-%%% salvar figura
-nomeFigura="Imagem binaria";
-if(salvarPNG)
-    saveas(gcf,destinoImagens+nomeFigura+'.png')
-end
-if(salvarFIG)
-    saveas(gcf,destinoImagens+nomeFigura+'.fig')
-end
-if(salvarEPS)
-    saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    
+    %%% salvar figura
+    nomeFigura="Imagem binaria";
+    if(salvarPNG)
+        saveas(gcf,destinoImagens+nomeFigura+'.png')
+    end
+    if(salvarFIG)
+        saveas(gcf,destinoImagens+nomeFigura+'.fig')
+    end
+    if(salvarEPS)
+        saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    end
 end
 if(plotsDesnecessarios)
     figure('Name','Imagem binaria com destaque estrutural','NumberTitle','off');
@@ -457,18 +476,19 @@ if(plotsDesnecessarios)
     title({'Realce dos pontos utilizados para encontrar as Longarinas de sustentação'})
     legend('Longarinas de sustentação')
     hold off
-end
-
-%%% salvar figura
-nomeFigura="Imagem binaria com destaque estrutural";
-if(salvarPNG)
-    saveas(gcf,destinoImagens+nomeFigura+'.png')
-end
-if(salvarFIG)
-    saveas(gcf,destinoImagens+nomeFigura+'.fig')
-end
-if(salvarEPS)
-    saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    
+    
+    %%% salvar figura
+    nomeFigura="Imagem binaria com destaque estrutural";
+    if(salvarPNG)
+        saveas(gcf,destinoImagens+nomeFigura+'.png')
+    end
+    if(salvarFIG)
+        saveas(gcf,destinoImagens+nomeFigura+'.fig')
+    end
+    if(salvarEPS)
+        saveas(gcf,destinoImagens+nomeFigura,'epsc')
+    end
 end
 %% redefinirDotcloudApenasDiagonais
 % dotclouddiag=zeros(size(dotcloudcut));%dotclouddiag é gerada para realizar o tratamento das retas diagonais
