@@ -13,7 +13,7 @@ Em ambas pastas o arquivo **main** contém o código principal os outros .m exis
 
 Para realizar corretamente os testes em seu computador é necessário realizar o download dos arquivos e abri-los pelo software matlab executando o arquivo main
 
-Obs: o *Current Folder* do *MatLab* deve estar direcionado para o destino do arquivo main que deseja ser executado, caso contrário o *MatLab* não localizara o bando de informação dos dados que armazenam a nuvem de pontos
+Obs: o *Current Folder* do *MatLab* deve estar direcionado para o destino do arquivo main que deseja ser executado, caso contrário o *MatLab* não localizara o banco de informação dos dados da nuvem de pontos
 
 
 ## Software de Aquisição de dados
